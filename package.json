@@ -2,7 +2,7 @@
   "name": "review-desk",
   "displayName": "Review Desk",
   "description": "Review code changes and pull requests with AI notes beside the code: pick lines, read the explanation, ask follow-ups, draft and post PR comments. Runs your own signed-in Claude Code or Codex (ChatGPT).",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "preview": true,
   "publisher": "brighthan99",
   "license": "MIT",

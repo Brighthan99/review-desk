@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (preview)
+
+- The README opens with a short demo: a line picked and explained, a follow-up question answered, and a PR comment drafted.
+
 ## 0.1.0 (preview)
 
 The first public preview.
