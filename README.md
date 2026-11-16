@@ -2,9 +2,9 @@
 
 **Review code changes and pull requests with AI notes beside the code.** Pick the lines you are reading, and Review Desk writes a short note on why they changed, how they work, or what could go wrong. Then ask follow-up questions, draft review comments and post them to the pull request, all without leaving VS Code.
 
-> **Review Desk runs your own Claude Code, or your own Codex (ChatGPT).** It does not call any AI service itself and never asks for, sees, or stores your credentials. Each note or answer is a run of the `claude` or `codex` command you have installed and signed in to, on your machine, under your own subscription (a Claude plan or a ChatGPT plan) or API key. That is the same as if you ran it yourself. Review Desk is an independent project and is not made, endorsed, or supported by Anthropic or OpenAI.
+![Review Desk in use: a line picked and explained, a follow-up question answered, and a PR comment drafted](docs/images/readme/demo.gif)
 
-![Review Desk: the review list, a changed file, and the notes panel with a summary, a flow diagram and notes](docs/images/readme/review-desk.png)
+> **Review Desk runs your own Claude Code, or your own Codex (ChatGPT).** It does not call any AI service itself and never asks for, sees, or stores your credentials. Each note or answer is a run of the `claude` or `codex` command you have installed and signed in to, on your machine, under your own subscription (a Claude plan or a ChatGPT plan) or API key. That is the same as if you ran it yourself. Review Desk is an independent project and is not made, endorsed, or supported by Anthropic or OpenAI.
 
 ## What it does
 
@@ -20,6 +20,8 @@
   - New replies and resolved threads are marked. A **Sync** button reads GitHub right away.
 - **Notes in any language** (`reviewDesk.language`). Notes written in another language can be translated with one click.
 - **Claude Code chat connection** (optional): your Claude Code chat can read the review's notes and save its answers as notes next to the code.
+
+![Review Desk: the review list, a changed file, and the notes panel with a summary, a flow diagram and notes](docs/images/readme/review-desk.png)
 
 ## Requirements
 

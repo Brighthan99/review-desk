@@ -6,5 +6,5 @@
 !CHANGELOG.md
 !LICENSE
 !ThirdPartyNotices.txt
-!docs/images/readme/**
+!docs/images/readme/*.png
 dist/**/*.map
