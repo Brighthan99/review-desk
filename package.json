@@ -1,0 +1,1093 @@
+{
+  "name": "review-desk",
+  "displayName": "Review Desk",
+  "description": "Review code changes and pull requests with AI notes beside the code: pick lines, read the explanation, ask follow-ups, draft and post PR comments. Runs your own signed-in Claude Code or Codex (ChatGPT).",
+  "version": "0.1.0",
+  "preview": true,
+  "publisher": "brighthan99",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brighthan99/review-desk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Brighthan99/review-desk/issues"
+  },
+  "homepage": "https://github.com/Brighthan99/review-desk#readme",
+  "private": true,
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "keywords": [
+    "code review",
+    "pull request",
+    "github",
+    "diff",
+    "explain code",
+    "claude",
+    "claude code",
+    "codex",
+    "chatgpt",
+    "ai"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "workspaceContains:.git"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "reviewDesk.start",
+        "title": "Start Review",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.startWithBase",
+        "title": "Start Review Against Branch…",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.compare",
+        "title": "Compare…",
+        "category": "Review Desk",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "reviewDesk.changeBase",
+        "title": "Change Base…",
+        "category": "Review Desk",
+        "icon": "$(arrow-left)"
+      },
+      {
+        "command": "reviewDesk.changeRight",
+        "title": "Change Compare Side…",
+        "category": "Review Desk",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "reviewDesk.compareFrom",
+        "title": "Compare from Here (Base)",
+        "category": "Review Desk",
+        "icon": "$(arrow-left)"
+      },
+      {
+        "command": "reviewDesk.compareTo",
+        "title": "Compare up to Here (Compare Side)",
+        "category": "Review Desk",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "reviewDesk.changeLanguage",
+        "title": "Change Answer Language…",
+        "category": "Review Desk",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "reviewDesk.chooseAgent",
+        "title": "Choose Agent…",
+        "category": "Review Desk",
+        "icon": "$(hubot)"
+      },
+      {
+        "command": "reviewDesk.commitActions",
+        "title": "Use This Commit…",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.tree.moreCommits",
+        "title": "Show More Commits",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.refreshWorktrees",
+        "title": "Refresh Worktrees",
+        "category": "Review Desk",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "reviewDesk.copyWorktreeRemove",
+        "title": "Copy Remove Command",
+        "category": "Review Desk",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "reviewDesk.removeWorktree",
+        "title": "Remove Worktree",
+        "category": "Review Desk",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "reviewDesk.reviewWorktree",
+        "title": "Review in This Window",
+        "category": "Review Desk",
+        "icon": "$(play)"
+      },
+      {
+        "command": "reviewDesk.openWorktree",
+        "title": "Open in New Window",
+        "category": "Review Desk",
+        "icon": "$(multiple-windows)"
+      },
+      {
+        "command": "reviewDesk.addWorktreeToWindow",
+        "title": "Add to This Window",
+        "category": "Review Desk",
+        "icon": "$(root-folder)"
+      },
+      {
+        "command": "reviewDesk.closeReview",
+        "title": "Close Review",
+        "category": "Review Desk",
+        "icon": "$(close)"
+      },
+      {
+        "command": "reviewDesk.finishReview",
+        "title": "Finish Review…",
+        "category": "Review Desk",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "reviewDesk.openReview",
+        "title": "Open Review",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.deleteReview",
+        "title": "Delete Review",
+        "category": "Review Desk",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "reviewDesk.refreshReviews",
+        "title": "Refresh",
+        "category": "Review Desk",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "reviewDesk.openPanel",
+        "title": "Open Notes Panel",
+        "category": "Review Desk",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.explainSelection",
+        "title": "Review Desk: Explain Code",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.draftComment",
+        "title": "Review Desk: Draft PR Comment",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "reviewDesk.askAboutSelection",
+        "title": "Review Desk: Ask About Code",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "reviewDesk.summarize",
+        "title": "Review Desk: Summarize Changes",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.summarizeFile",
+        "title": "Review Desk: Summarize File",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.connectChat",
+        "title": "Connect Claude Code Chat",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.disconnectChat",
+        "title": "Disconnect Claude Code Chat",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.nextCard",
+        "title": "Next Note",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.prevCard",
+        "title": "Previous Note",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.github.open",
+        "title": "Open GitHub Pull Request",
+        "category": "Review Desk",
+        "icon": "$(github)"
+      },
+      {
+        "command": "reviewDesk.fetch",
+        "title": "Fetch",
+        "category": "Review Desk",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "reviewDesk.github.openUrl",
+        "title": "Open Pull Request by Its Address…",
+        "category": "Review Desk",
+        "icon": "$(link)"
+      },
+      {
+        "command": "reviewDesk.markViewed",
+        "title": "Mark File as Viewed",
+        "category": "Review Desk",
+        "icon": "$(check)"
+      },
+      {
+        "command": "reviewDesk.markNotViewed",
+        "title": "Mark File as Not Viewed",
+        "category": "Review Desk",
+        "icon": "$(pass-filled)"
+      },
+      {
+        "command": "reviewDesk.diffSinceViewed",
+        "title": "Diff Since Viewed",
+        "category": "Review Desk",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "reviewDesk.hideViewed",
+        "title": "Hide Viewed Files",
+        "category": "Review Desk",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "reviewDesk.showViewed",
+        "title": "Show Viewed Files",
+        "category": "Review Desk",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "reviewDesk.github.importThreads",
+        "title": "Re-import GitHub Comments",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.github.post",
+        "title": "Post Notes as PR Review",
+        "category": "Review Desk",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "reviewDesk.openReviewFile",
+        "title": "Open Review File",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.showActions",
+        "title": "Menu",
+        "category": "Review Desk",
+        "icon": "$(menu)"
+      },
+      {
+        "command": "reviewDesk.selectCard",
+        "title": "Select Note",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.openFile",
+        "title": "Open File",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.tree.showOrder",
+        "title": "Show Notes in Order",
+        "category": "Review Desk",
+        "icon": "$(list-ordered)"
+      },
+      {
+        "command": "reviewDesk.tree.showReading",
+        "title": "Show in Reading Order",
+        "category": "Review Desk",
+        "icon": "$(milestone)"
+      },
+      {
+        "command": "reviewDesk.tree.showFolders",
+        "title": "Show Folders",
+        "category": "Review Desk",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "reviewDesk.tree.showAll",
+        "title": "Show All Files",
+        "category": "Review Desk",
+        "icon": "$(files)"
+      },
+      {
+        "command": "reviewDesk.tree.showChanged",
+        "title": "Show Changed Files Only",
+        "category": "Review Desk",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "reviewDesk.explainRange",
+        "title": "Explain Lines",
+        "category": "Review Desk",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.askAboutRange",
+        "title": "Ask About Lines",
+        "category": "Review Desk",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "reviewDesk.toggleDiff",
+        "title": "Review Desk: Toggle Diff"
+      },
+      {
+        "command": "reviewDesk.showDiff",
+        "title": "Review Desk: Show Diff",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "reviewDesk.showFile",
+        "title": "Review Desk: Show File",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "reviewDesk.compareAt",
+        "title": "Compare with Base",
+        "category": "Review Desk",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "reviewDesk.backToFile",
+        "title": "Review Desk: Back to File"
+      },
+      {
+        "command": "reviewDesk.diffInline",
+        "title": "Review Desk: Show Diff Inline (- +)",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "reviewDesk.diffSideBySide",
+        "title": "Review Desk: Show Diff Side by Side",
+        "icon": "$(split-horizontal)"
+      },
+      {
+        "command": "reviewDesk.explainChange",
+        "title": "Review Desk: Explain Change",
+        "icon": "$(review-desk-logo)"
+      },
+      {
+        "command": "reviewDesk.askAboutChange",
+        "title": "Review Desk: Ask About Change",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "reviewDesk.startInFolder",
+        "title": "Start Review in Folder…",
+        "category": "Review Desk",
+        "icon": "$(play)"
+      },
+      {
+        "command": "reviewDesk.chooseFolder",
+        "title": "Review This Folder",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.showLog",
+        "title": "Show Log",
+        "category": "Review Desk",
+        "icon": "$(output)"
+      },
+      {
+        "command": "reviewDesk.reportProblem",
+        "title": "Report a Problem…",
+        "category": "Review Desk",
+        "icon": "$(report)"
+      },
+      {
+        "command": "reviewDesk.translateNotes",
+        "title": "Translate Notes into the Current Language",
+        "category": "Review Desk",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "reviewDesk.tree.expandAll",
+        "title": "Expand All",
+        "category": "Review Desk",
+        "icon": "$(expand-all)"
+      },
+      {
+        "command": "reviewDesk.tree.collapseAll",
+        "title": "Collapse All",
+        "category": "Review Desk",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "reviewDesk.draftCommentRange",
+        "title": "Draft PR Comment on Lines",
+        "category": "Review Desk",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "reviewDesk.github.postComment",
+        "title": "Post PR Comment",
+        "category": "Review Desk",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "reviewDesk.showNewReplies",
+        "title": "Show New GitHub Replies",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.github.postReply",
+        "title": "Post Reply on GitHub",
+        "category": "Review Desk"
+      },
+      {
+        "command": "reviewDesk.github.sync",
+        "title": "Sync GitHub Comments Now",
+        "category": "Review Desk",
+        "icon": "$(sync)"
+      }
+    ],
+    "icons": {
+      "review-desk-logo": {
+        "description": "Review Desk",
+        "default": {
+          "fontPath": "media/review-desk-icons.woff",
+          "fontCharacter": "\\E000"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "reviewDesk",
+          "title": "Review Desk",
+          "icon": "media/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "reviewDesk": [
+        {
+          "id": "reviewDesk.files",
+          "name": "Review",
+          "icon": "media/logo.svg",
+          "contextualTitle": "Review Desk"
+        },
+        {
+          "id": "reviewDesk.reviews",
+          "name": "Saved Reviews",
+          "contextualTitle": "Review Desk"
+        },
+        {
+          "id": "reviewDesk.worktrees",
+          "name": "Worktrees",
+          "contextualTitle": "Review Desk",
+          "visibility": "collapsed"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Review Desk",
+      "properties": {
+        "reviewDesk.baseRef": {
+          "type": "string",
+          "default": "",
+          "description": "Base to compare with when the branch has no PR target of its own. A branch first uses the target of its open pull request, then its recorded PR target (git config branch.<name>.gh-merge-base, shared with GitHub CLI), then the base of its last review. When empty: origin/HEAD, then main, then master."
+        },
+        "reviewDesk.language": {
+          "type": "string",
+          "default": "English",
+          "markdownDescription": "Language the AI writes notes and answers in. Any language name works, e.g. `English`, `Korean`, `Japanese`, `Deutsch`."
+        },
+        "reviewDesk.commentLanguage": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Language of the PR comments the AI drafts (**Draft PR Comment**), which are posted on pull requests. Empty: the same as `#reviewDesk.language#`."
+        },
+        "reviewDesk.includeUncommitted": {
+          "type": "boolean",
+          "default": true,
+          "description": "Review the working tree: uncommitted edits and new files are part of the diff. When off, only commits up to HEAD are reviewed."
+        },
+        "reviewDesk.codeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Explain · Ask · Comment · Diff links above each changed block."
+        },
+        "reviewDesk.hover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Review Desk actions when hovering a changed block."
+        },
+        "reviewDesk.inlineHint": {
+          "type": "boolean",
+          "default": true,
+          "description": "With the cursor in a changed block, show a hint at the end of the line: the shortcut that explains the block, or the note already written for it."
+        },
+        "reviewDesk.highlightChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Highlight lines changed against the base when a changed file is open outside the diff editor."
+        },
+        "reviewDesk.notifyBranchSwitch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Say so when the repository under review is switched to another branch outside Review Desk (a terminal, an agent, another tool); the review follows it either way."
+        },
+        "reviewDesk.dimTrivialChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Fade changed lines with nothing to read line by line (only whitespace, code moved from elsewhere in the change, import lines, generated files) and label them in the file list and above the block."
+        },
+        "reviewDesk.diffOpensIn": {
+          "type": "string",
+          "enum": [
+            "sameTab",
+            "newTab"
+          ],
+          "enumDescriptions": [
+            "The diff takes the place of the file's tab; Show File turns it back.",
+            "The diff opens in a tab of its own next to the file."
+          ],
+          "default": "sameTab",
+          "description": "Where Show Diff (and the Diff link above a block) shows the diff."
+        },
+        "reviewDesk.showCommentThreads": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also show notes as comment threads in the diff. Notes always appear in the side panel."
+        },
+        "reviewDesk.openPanelOnStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open the notes panel when a review starts."
+        },
+        "reviewDesk.agent": {
+          "type": "string",
+          "enum": [
+            "claude",
+            "codex"
+          ],
+          "enumDescriptions": [
+            "Claude Code, signed in to a Claude plan or with an API key",
+            "Codex (OpenAI), signed in with a ChatGPT plan or with an API key"
+          ],
+          "default": "claude",
+          "scope": "application",
+          "markdownDescription": "The coding agent that writes notes, answers and summaries: **Claude Code** or **Codex** (ChatGPT). Review Desk runs the one installed on this computer, with the account it is signed in to, and asks once before its first run. Read from your user settings only."
+        },
+        "reviewDesk.claudePath": {
+          "type": "string",
+          "default": "",
+          "description": "The claude executable (Claude Code) that writes notes and answers, as a full path. Read from your user settings only, never a workspace's. When empty: claude on PATH, then the one bundled with the Claude Code extension.",
+          "scope": "machine"
+        },
+        "reviewDesk.codexPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "The codex executable (Codex) that writes notes and answers when reviewDesk.agent is codex, as a full path. Read from your user settings only. When empty: codex on PATH (for an npm install, the native binary in its package)."
+        },
+        "reviewDesk.model": {
+          "type": "string",
+          "default": "",
+          "description": "Model for notes and answers (e.g. sonnet, haiku). When empty: the Claude Code default.",
+          "scope": "application"
+        },
+        "reviewDesk.codexModel": {
+          "type": "string",
+          "default": "",
+          "scope": "application",
+          "description": "Model for Codex runs (e.g. a GPT model name). When empty: Codex's default. Read from your user settings only."
+        },
+        "reviewDesk.effort": {
+          "type": "string",
+          "enum": [
+            "",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ],
+          "enumDescriptions": [
+            "Claude Code's default",
+            "Least thinking: quickest, uses the least",
+            "Some thinking (default)",
+            "More thinking",
+            "Even more thinking",
+            "Most thinking: slowest, uses the most"
+          ],
+          "default": "medium",
+          "scope": "application",
+          "markdownDescription": "How much Claude thinks before writing a note, an answer, a summary or a draft (Claude Code's `--effort`). Less thinking uses less of your Claude plan's usage limits or your API usage. Empty: Claude Code's default. Translations always use `low`. Read from your user settings only."
+        },
+        "reviewDesk.maxBudgetUsd": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.01,
+          "description": "Cost limit per note, question or summary, in USD (passed as claude --max-budget-usd).",
+          "scope": "application"
+        },
+        "reviewDesk.summaryMaxBudgetUsd": {
+          "type": "number",
+          "default": 2,
+          "minimum": 0.01,
+          "description": "Cost limit for a summary of the whole change, in USD. A summary reads every diff, so it costs more than a note.",
+          "scope": "application"
+        },
+        "reviewDesk.summaryReadingOrder": {
+          "type": "boolean",
+          "default": true,
+          "description": "With a summary of the whole change, also suggest the order to read it in (related changes grouped, foundations first). Shown under the summary and as Show in Reading Order in the file list."
+        },
+        "reviewDesk.summaryDiagram": {
+          "type": "boolean",
+          "default": true,
+          "description": "With a summary of the whole change, also draw the flow it adds or alters (calls, data, events) as a diagram, when it has one."
+        },
+        "reviewDesk.maxConcurrentQuestions": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "maximum": 6,
+          "description": "Questions answered at the same time. Notes are written one at a time.",
+          "scope": "application"
+        },
+        "reviewDesk.githubCheckMinutes": {
+          "type": "number",
+          "default": 5,
+          "minimum": 0,
+          "markdownDescription": "While a pull request is reviewed, how often (minutes) to look on GitHub for new replies to its review threads, the comments posted from here included. Also on coming back to the window and on Fetch. `0`: only when asked (Re-import GitHub Comments). Never asks to sign in."
+        }
+      }
+    },
+    "viewsWelcome": [
+      {
+        "view": "reviewDesk.files",
+        "contents": "No git repository is open in this window. Open a folder with one to review its branch, or select code in any file and run \"Review Desk: Explain Code\".\n[Open Folder…](command:workbench.action.files.openFolder)"
+      },
+      {
+        "view": "reviewDesk.reviews",
+        "contents": "No saved reviews yet. A review is saved as soon as it starts, and its notes stay with the branch."
+      },
+      {
+        "view": "reviewDesk.worktrees",
+        "contents": "No git repository in this window. The git worktrees of the repositories open here are listed, with the ones Review Desk made to compare or to check a pull request out."
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "reviewDesk.compare",
+          "when": "view == reviewDesk.files && reviewDesk.active",
+          "group": "navigation@0"
+        },
+        {
+          "command": "reviewDesk.showActions",
+          "when": "view == reviewDesk.files",
+          "group": "navigation@1"
+        },
+        {
+          "command": "reviewDesk.refreshWorktrees",
+          "when": "view == reviewDesk.worktrees",
+          "group": "navigation"
+        },
+        {
+          "command": "reviewDesk.refreshReviews",
+          "when": "view == reviewDesk.reviews",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "reviewDesk.explainSelection",
+          "when": "resourceScheme == file || resourceScheme == git",
+          "group": "navigation@89"
+        },
+        {
+          "command": "reviewDesk.draftComment",
+          "when": "reviewDesk.active && (resourceScheme == file || resourceScheme == git)",
+          "group": "navigation@89"
+        },
+        {
+          "command": "reviewDesk.askAboutSelection",
+          "when": "editorHasSelection && reviewDesk.active",
+          "group": "navigation@90"
+        },
+        {
+          "command": "reviewDesk.summarizeFile",
+          "when": "resourceScheme == file",
+          "group": "navigation@91"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "reviewDesk.removeWorktree",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.markViewed",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.markNotViewed",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.diffSinceViewed",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.hideViewed",
+          "when": "reviewDesk.active && !reviewDesk.hideViewed"
+        },
+        {
+          "command": "reviewDesk.showViewed",
+          "when": "reviewDesk.active && reviewDesk.hideViewed"
+        },
+        {
+          "command": "reviewDesk.selectCard",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.openFile",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.tree.showOrder",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.tree.showFolders",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.tree.showReading",
+          "when": "reviewDesk.active && reviewDesk.hasReadingOrder"
+        },
+        {
+          "command": "reviewDesk.tree.showAll",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.tree.showChanged",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.explainRange",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.askAboutRange",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.compareAt",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.explainChange",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.askAboutChange",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.closeReview",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.finishReview",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.openReview",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.deleteReview",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.refreshReviews",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.compareFrom",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.compareTo",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.commitActions",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.tree.moreCommits",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.copyWorktreeRemove",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.reviewWorktree",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.openWorktree",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.addWorktreeToWindow",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.backToFile",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.showDiff",
+          "when": "reviewDesk.activeFileChanged"
+        },
+        {
+          "command": "reviewDesk.showFile",
+          "when": "isInDiffEditor"
+        },
+        {
+          "command": "reviewDesk.toggleDiff",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.startInFolder",
+          "when": "workspaceFolderCount > 1"
+        },
+        {
+          "command": "reviewDesk.chooseFolder",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.translateNotes",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.tree.expandAll",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.tree.collapseAll",
+          "when": "reviewDesk.active"
+        },
+        {
+          "command": "reviewDesk.draftCommentRange",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.github.postComment",
+          "when": "false"
+        },
+        {
+          "command": "reviewDesk.github.postReply",
+          "when": "false"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "reviewDesk.markViewed",
+          "when": "reviewDesk.active && reviewDesk.activeFileView == unviewed",
+          "group": "navigation@-999"
+        },
+        {
+          "command": "reviewDesk.markNotViewed",
+          "when": "reviewDesk.active && reviewDesk.activeFileView == viewed",
+          "group": "navigation@-999"
+        },
+        {
+          "command": "reviewDesk.showDiff",
+          "when": "reviewDesk.active && reviewDesk.activeFileChanged && !isInDiffEditor",
+          "group": "navigation@-1000"
+        },
+        {
+          "command": "reviewDesk.showFile",
+          "when": "isInDiffEditor && reviewDesk.active",
+          "group": "navigation@-1000"
+        },
+        {
+          "command": "reviewDesk.diffInline",
+          "when": "isInDiffEditor && reviewDesk.active && config.diffEditor.renderSideBySide",
+          "group": "navigation@88"
+        },
+        {
+          "command": "reviewDesk.diffSideBySide",
+          "when": "isInDiffEditor && reviewDesk.active && !config.diffEditor.renderSideBySide",
+          "group": "navigation@88"
+        },
+        {
+          "command": "reviewDesk.openPanel",
+          "when": "reviewDesk.active",
+          "group": "navigation@90"
+        }
+      ],
+      "scm/change/title": [
+        {
+          "command": "reviewDesk.explainChange",
+          "when": "resourceScheme == file",
+          "group": "navigation@90"
+        },
+        {
+          "command": "reviewDesk.askAboutChange",
+          "when": "resourceScheme == file",
+          "group": "navigation@91"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "reviewDesk.reviewWorktree",
+          "when": "view == reviewDesk.worktrees && viewItem =~ /^worktree(Main)?(Here)?$/",
+          "group": "inline@0"
+        },
+        {
+          "command": "reviewDesk.openWorktree",
+          "when": "view == reviewDesk.worktrees && viewItem =~ /^worktree(Main)?$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "reviewDesk.addWorktreeToWindow",
+          "when": "view == reviewDesk.worktrees && viewItem =~ /^worktree(Main)?$/",
+          "group": "inline@2"
+        },
+        {
+          "command": "reviewDesk.removeWorktree",
+          "when": "view == reviewDesk.worktrees && viewItem =~ /^worktree(Here|Prunable)?$/",
+          "group": "inline@3"
+        },
+        {
+          "command": "reviewDesk.copyWorktreeRemove",
+          "when": "view == reviewDesk.worktrees && viewItem =~ /^worktree(Here|Prunable)?$/",
+          "group": "inline@4"
+        },
+        {
+          "command": "reviewDesk.deleteReview",
+          "when": "view == reviewDesk.reviews && viewItem == savedReview",
+          "group": "inline"
+        },
+        {
+          "command": "reviewDesk.compareFrom",
+          "when": "view == reviewDesk.files && viewItem =~ /^history(Commit|Head|Earlier)$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "reviewDesk.compareTo",
+          "when": "view == reviewDesk.files && viewItem == historyCommit",
+          "group": "inline@2"
+        },
+        {
+          "command": "reviewDesk.diffSinceViewed",
+          "when": "view == reviewDesk.files && viewItem == changedFileSinceViewed",
+          "group": "inline@1"
+        },
+        {
+          "command": "reviewDesk.summarizeFile",
+          "when": "view == reviewDesk.files && viewItem =~ /^(changedFile|changedFileSinceViewed|file)$/",
+          "group": "inline@2"
+        },
+        {
+          "command": "reviewDesk.summarizeFile",
+          "when": "view == reviewDesk.files && viewItem =~ /^(changedFile|changedFileSinceViewed|file)$/",
+          "group": "navigation"
+        },
+        {
+          "command": "reviewDesk.diffSinceViewed",
+          "when": "view == reviewDesk.files && viewItem == changedFileSinceViewed",
+          "group": "navigation"
+        },
+        {
+          "command": "reviewDesk.startInFolder",
+          "when": "view == reviewDesk.files && viewItem == repo",
+          "group": "inline"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "reviewDesk.summarizeFile",
+          "when": "resourceScheme == file && !explorerResourceIsFolder",
+          "group": "7_reviewDesk"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "reviewDesk.explainSelection",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "reviewDesk.askAboutSelection",
+        "key": "ctrl+alt+/",
+        "mac": "cmd+alt+/",
+        "when": "editorTextFocus && reviewDesk.active"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc -p . --noEmit && tsc -p tsconfig.webview.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "vitest run",
+    "pretest:integration": "npm run build && node -e \"require('fs').rmSync('out',{recursive:true,force:true})\" && tsc -p tsconfig.test.json",
+    "test:integration": "vscode-test",
+    "test": "npm run test:unit && npm run test:integration",
+    "vscode:prepublish": "npm run build -- --production",
+    "package": "vsce package --no-dependencies",
+    "icons": "node scripts/icon-font.mjs",
+    "notices": "node scripts/notices.mjs",
+    "sandbox": "node scripts/sandbox.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.19.43",
+    "@types/vscode": "1.101.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "prettier": "^3.9.10",
+    "svg2ttf": "^6.1.0",
+    "svgicons2svgfont": "^15.0.1",
+    "ttf2woff": "^3.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.17",
+    "marked": "^18.1.2",
+    "mermaid": "^11.17.2",
+    "preact": "^11.1.0",
+    "zod": "^4.6.7"
+  },
+  "icon": "media/icon.png",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Review Desk runs git and Claude Code in the repository under review."
+    }
+  }
+}
