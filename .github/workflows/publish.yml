@@ -1,0 +1,44 @@
+name: Publish
+
+# Publishes the extension to the Visual Studio Marketplace, started by hand from the Actions
+# tab (Run workflow, on main). No token is kept in the repository: the Marketplace trusts this
+# repository and this workflow file (trusted publishing), and vsce exchanges the job's OIDC
+# token for a short-lived Marketplace one.
+#
+# Before running it, raise "version" in package.json and add it to CHANGELOG.md: the
+# Marketplace refuses a version it already has.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # The same checks as CI, so what is published has passed them.
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run test:unit
+      - run: xvfb-run -a npm run test:integration
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: '*.vsix'
+      # The package tested above, as it is. Trusted publishing (--oidc) needs vsce 4.1 or later.
+      - run: npx --yes @vscode/vsce@4.1.1 publish --oidc --packagePath review-desk-*.vsix
