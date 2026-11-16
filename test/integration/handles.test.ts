@@ -331,12 +331,20 @@ describe('change handles and uncommitted changes', () => {
       if (kept === undefined) fs.rmSync(exclude);
       else fs.writeFileSync(exclude, kept);
     }
+    // The refresh may still be under way: the next test must not find this edit in the review.
+    await until(
+      'token.ts unchanged again',
+      () => !controller.target!.files.map(filePath).includes('src/auth/token.ts'),
+    );
   });
 
   it('fades a change with nothing to read, and says why above it', async () => {
     const files = () => api.controller.target?.files.map(filePath) ?? [];
     const token = vscode.Uri.file(path.join(workspace(), 'src/auth/token.ts'));
     const text = fs.readFileSync(token.fsPath, 'utf8');
+    // Not an edit of an earlier test still in the review: token.ts would count as changed
+    // already, with that change's blocks.
+    await until('token.ts unchanged before', () => !files().includes('src/auth/token.ts'));
     // Only indentation changes on the first line.
     fs.writeFileSync(token.fsPath, text.replace(/^(\s*)/, '$1    '));
     try {
