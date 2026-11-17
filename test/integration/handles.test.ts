@@ -324,6 +324,10 @@ describe('change handles and uncommitted changes', () => {
       assert.strictEqual(refreshed, 0, 'build output and the like change nothing');
       fs.appendFileSync(token, '// uncommitted\n');
       await until('a tracked file refreshes the diff', () => refreshed > 0);
+      // Its refresh done: one ending after the file is put back would bring the edit back.
+      await until('the edit in the review', () =>
+        controller.target!.files.map(filePath).includes('src/auth/token.ts'),
+      );
     } finally {
       delete (controller as { refreshTarget?: unknown }).refreshTarget;
       run('checkout', '--', 'src/auth/token.ts');

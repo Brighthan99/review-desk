@@ -181,7 +181,7 @@ describe('explanations on request', () => {
       // Allowed on retry: it runs, and is not asked again.
       answer = 'Continue';
       await api.panel.receive({ type: 'retry', id });
-      await until('explained on retry', () => card(id)?.pending === undefined);
+      await until('explained on retry', () => !!card(id)?.body && card(id)?.pending === undefined);
       assert.strictEqual(asked.length, 2);
       assert.ok(api.agentUse.accepted('claude'));
       // The fake run reports a signed-in Claude account, as a real one does.

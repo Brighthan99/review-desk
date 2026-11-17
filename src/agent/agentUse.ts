@@ -35,6 +35,12 @@ const CONTINUE = 'Continue';
 export class AgentUse {
   private readonly asking = new Map<AgentKind, Promise<boolean>>();
   private readonly listeners = new Set<() => void>();
+  /**
+   * The notices accepted in this session. VS Code's globalState replaces its whole copy when
+   * storage reports a change, and a report of an earlier write can arrive after a newer
+   * update: the store alone may briefly forget a notice just accepted.
+   */
+  private readonly acceptedNow = new Set<AgentKind>();
 
   constructor(
     private readonly store: Store,
@@ -52,15 +58,17 @@ export class AgentUse {
 
   /** Whether the notice of the agent (the current one by default) was accepted. */
   accepted(kind: AgentKind = this.agent()): boolean {
-    return this.store.get<number>(ACCEPTED[kind]) === NOTICE_VERSION;
+    return this.acceptedNow.has(kind) || this.store.get<number>(ACCEPTED[kind]) === NOTICE_VERSION;
   }
 
   async accept(kind: AgentKind = this.agent()): Promise<void> {
+    this.acceptedNow.add(kind);
     await this.store.update(ACCEPTED[kind], NOTICE_VERSION);
   }
 
   /** Forgets the answer, so the notice is asked again (tests). */
   async reset(kind: AgentKind = this.agent()): Promise<void> {
+    this.acceptedNow.delete(kind);
     await this.store.update(ACCEPTED[kind], undefined);
   }
 

@@ -68,6 +68,28 @@ describe('the agent runs as the reviewer knows them', () => {
     expect(asked).toHaveLength(1);
   });
 
+  it('keeps a notice accepted when the store briefly hands back an older copy', async () => {
+    // VS Code's globalState, told of an earlier write after a newer update.
+    let stale = false;
+    const kept = memory();
+    const store: Store = {
+      get: <T>(k: string) => (stale ? undefined : kept.get<T>(k)),
+      update: (k, v) => kept.update(k, v),
+    };
+    const use = new AgentUse(
+      store,
+      () => 'claude',
+      paths,
+      async () => 'Continue',
+    );
+    await use.accept('claude');
+    stale = true;
+    expect(use.accepted('claude')).toBe(true);
+    expect(use.accepted('codex')).toBe(false);
+    await use.reset('claude');
+    expect(use.accepted('claude')).toBe(false);
+  });
+
   it('runs nothing when the notice is dismissed, and asks again next time', async () => {
     let answer: string | undefined = undefined;
     let asked = 0;
